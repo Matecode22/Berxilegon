@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discografia</title>
+</head>
+<body>
+    <h1>Gestion de discografia</h1>
+
+    <p><a href="artists">Ver todos los artistas</a></p>
+    <p><a href="tracks">Ver todos los tracks</a></p>
+
+    <h2>Registrar artista</h2>
+    <form action="artists" method="POST">
+        <input name="id" type="number" placeholder="Id">
+        <input name="name" type="text" placeholder="Nombre">
+        <input name="nationality" type="text" placeholder="Nacionalidad">
+        <button>Enviar</button>
+    </form>
+
+    <h2>Buscar artista por nombre</h2>
+    <form action="searchArtist" method="GET">
+        <input name="name" type="text" placeholder="Nombre exacto">
+        <button>Buscar</button>
+    </form>
+
+    <h2>Eliminar artista</h2>
+    <form action="deleteArtist" method="POST">
+        <input name="id" type="number" placeholder="Id">
+        <button>Eliminar</button>
+    </form>
+
+    <h2>Registrar track</h2>
+    <form action="tracks" method="POST">
+        <input name="id" type="number" placeholder="Id">
+        <input name="title" type="text" placeholder="Titulo">
+        <input name="genre" type="text" placeholder="Genero">
+        <input name="duration" type="number" placeholder="Duracion en segundos">
+        <input name="albumTitle" type="text" placeholder="Album">
+        <input name="artistId1" type="number" placeholder="Id artista 1 (opcional)">
+        <input name="artistId2" type="number" placeholder="Id artista 2 (opcional)">
+        <input name="artistId3" type="number" placeholder="Id artista 3 (opcional)">
+        <input name="artistId4" type="number" placeholder="Id artista 4 (opcional)">
+        <input name="artistId5" type="number" placeholder="Id artista 5 (opcional)">
+        <input name="artistId6" type="number" placeholder="Id artista 6 (opcional)">
+        <input name="artistId7" type="number" placeholder="Id artista 7 (opcional)">
+        <input name="artistId8" type="number" placeholder="Id artista 8 (opcional)">
+        <input name="artistId9" type="number" placeholder="Id artista 9 (opcional)">
+        <input name="artistId10" type="number" placeholder="Id artista 10 (opcional)">
+        <button>Enviar</button>
+    </form>
+
+    <h2>Eliminar track</h2>
+    <form action="deleteTrack" method="POST">
+        <input name="id" type="number" placeholder="Id">
+        <button>Eliminar</button>
+    </form>
+</body>
+</html>

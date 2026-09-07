@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Repositorios-->
+    <bean id="artistRepository"
+          class="edu.co.icesi.repository.ArtistRepository"
+          init-method="initialize"/>
+
+    <bean id="trackRepository"
+          class="edu.co.icesi.repository.TrackRepository"
+          init-method="initialize">
+        <constructor-arg ref="artistRepository"/>
+    </bean>
+
+    <!--Services-->
+    <bean id="artistService"
+          class="edu.co.icesi.service.ArtistService">
+        <constructor-arg ref="artistRepository"/>
+        <constructor-arg ref="trackRepository"/>
+    </bean>
+
+    <bean id="trackService"
+          class="edu.co.icesi.service.TrackService">
+        <constructor-arg ref="trackRepository"/>
+        <constructor-arg ref="artistRepository"/>
+    </bean>
+
+</beans>
