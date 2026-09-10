@@ -1,10 +1,13 @@
 package edu.co.icesi.repository;
 
 import edu.co.icesi.model.Artist;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.HashMap;
 
+@Repository
 public class ArtistRepository {
 
     private HashMap<Integer, Artist> artists;
@@ -42,6 +45,7 @@ public class ArtistRepository {
         artists.remove(artistId);
     }
 
+    @PostConstruct
     public void initialize() {
         for (int i = 1; i <= 10; i++) {
             Artist artist = new Artist();

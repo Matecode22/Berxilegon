@@ -4,20 +4,21 @@ import edu.co.icesi.model.Artist;
 import edu.co.icesi.model.Track;
 import edu.co.icesi.repository.ArtistRepository;
 import edu.co.icesi.repository.TrackRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Service
 public class ArtistService {
 
+    @Autowired
     private ArtistRepository artistRepository;
-    private TrackRepository trackRepository;
 
-    public ArtistService(ArtistRepository artistRepository, TrackRepository trackRepository) {
-        this.artistRepository = artistRepository;
-        this.trackRepository = trackRepository;
-    }
+    @Autowired
+    private TrackRepository trackRepository;
 
     public Collection<Artist> getArtists() {
         return artistRepository.findAll();

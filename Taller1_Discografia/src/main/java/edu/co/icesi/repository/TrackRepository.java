@@ -2,23 +2,23 @@ package edu.co.icesi.repository;
 
 import edu.co.icesi.model.Artist;
 import edu.co.icesi.model.Track;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.HashMap;
 
+@Repository
 public class TrackRepository {
 
     private HashMap<Integer, Track> tracks;
 
+    @Autowired
     private ArtistRepository artistRepository;
 
     public TrackRepository() {
         tracks = new HashMap<>();
-    }
-
-    public TrackRepository(ArtistRepository artistRepository) {
-        tracks = new HashMap<>();
-        this.artistRepository = artistRepository;
     }
 
     public Collection<Track> findAll() {
@@ -41,6 +41,7 @@ public class TrackRepository {
         tracks.remove(trackId);
     }
 
+    @PostConstruct
     public void initialize() {
         int trackId = 1;
         for (int artistId = 1; artistId <= 10; artistId++) {
