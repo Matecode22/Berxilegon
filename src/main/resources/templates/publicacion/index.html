@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Publicaciones</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body class="page courses-page">
+    <h1 class="page-title" th:text="${title}">...</h1>
+    <p><a class="course-link" th:href="@{/publicaciones/new}">+ Nueva publicación</a></p>
+
+    <ul id="publicacion-list" class="course-grid">
+        <li class="course-card" th:each="publicacion : ${publicacionList}">
+            <h4 class="course-card-title">
+                <a class="course-link" th:href="@{/publicaciones/detail/{id}(id=${publicacion.id})}">
+                    <span th:text="${publicacion.titulo}"/>
+                </a>
+            </h4>
+            <small class="course-professor"
+                   th:text="${publicacion.modoOferta} + ' · ' + ${publicacion.estado} + ' · ' + ${publicacion.categoria.nombre}"></small>
+        </li>
+    </ul>
+
+</body>
+</html>

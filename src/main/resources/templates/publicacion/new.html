@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nueva publicación</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <h1 class="auth-title">Nueva publicación</h1>
+    <p class="auth-subtitle">Si es VENTA llena el precio; si es SUBASTA, precio base, incremento y cierre.</p>
+
+    <form class="auth-form" method="post"
+          th:object="${publicacion}"
+          th:action="@{/publicaciones/save}">
+        <label class="field">
+            <span class="field-label">Título</span>
+            <input class="field-input" type="text" placeholder="Portátil Lenovo" th:field="*{titulo}" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Descripción</span>
+            <input class="field-input" type="text" placeholder="Estado, características..." th:field="*{descripcion}">
+        </label>
+        <label class="field">
+            <span class="field-label">Categoría</span>
+            <select class="field-input" th:field="*{categoria}">
+                <option th:each="cat : ${categorias}"
+                        th:value="${cat.id}"
+                        th:text="${cat.nombre}">
+                </option>
+            </select>
+        </label>
+        <label class="field">
+            <span class="field-label">Estado de conservación</span>
+            <select class="field-input" th:field="*{estadoConservacion}">
+                <option value="NUEVO">Nuevo</option>
+                <option value="COMO_NUEVO">Como nuevo</option>
+                <option value="BUENO">Bueno</option>
+                <option value="ACEPTABLE">Aceptable</option>
+            </select>
+        </label>
+        <label class="field">
+            <span class="field-label">Modo de oferta</span>
+            <select class="field-input" th:field="*{modoOferta}">
+                <option value="VENTA">Venta</option>
+                <option value="SUBASTA">Subasta</option>
+                <option value="INTERCAMBIO">Intercambio</option>
+            </select>
+        </label>
+
+        <label class="field">
+            <span class="field-label">Precio (venta)</span>
+            <input class="field-input" type="number" min="1" th:field="*{detalleVenta.precio}">
+        </label>
+        <label class="field">
+            <span class="field-label">¿Acepta intercambio? (venta)</span>
+            <input type="checkbox" th:field="*{detalleVenta.elegibleIntercambio}">
+        </label>
+        <label class="field">
+            <span class="field-label">Precio base (subasta)</span>
+            <input class="field-input" type="number" min="1" th:field="*{detalleSubasta.precioBase}">
+        </label>
+        <label class="field">
+            <span class="field-label">Incremento mínimo (subasta)</span>
+            <input class="field-input" type="number" min="1" th:field="*{detalleSubasta.incrementoMinimo}">
+        </label>
+        <label class="field">
+            <span class="field-label">Fecha de cierre (subasta)</span>
+            <input class="field-input" type="datetime-local" th:field="*{detalleSubasta.fechaCierre}">
+        </label>
+
+        <button class="btn-primary" type="submit">Publicar</button>
+    </form>
+
+    <p class="auth-footer">
+        <a th:href="@{/publicaciones}">Volver a publicaciones</a>
+    </p>
+</main>
+</body>
+</html>

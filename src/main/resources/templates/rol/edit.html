@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar rol</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+</head>
+<body class="users-page">
+<main class="users-card">
+    <header class="users-header">
+        <div>
+            <h1 class="users-title" th:text="${rol.nombre}">ROLE_ADMIN</h1>
+            <p class="users-meta">Marca los permisos que tendrá este rol y desmarca los que quieras quitar.</p>
+        </div>
+    </header>
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+
+    <form method="post" th:action="@{/rol/{id}/permisos(id=${rol.id})}">
+        <ul class="check-list check-grid">
+            <li th:each="permiso : ${permisos}">
+                <label class="check-item">
+                    <input class="check-input"
+                           type="checkbox"
+                           name="permisoIds"
+                           th:value="${permiso.id}"
+                           th:checked="${#lists.contains(assignedPermisoIds, permiso.id)}">
+                    <span class="check-label" th:text="${permiso.nombre}">CREATE_USER</span>
+                </label>
+            </li>
+            <li class="text-muted" th:if="${#lists.isEmpty(permisos)}">No hay permisos creados.</li>
+        </ul>
+
+        <footer class="users-footer actions">
+            <a class="btn btn-outline" th:href="@{/rol}">Volver a roles</a>
+            <button class="btn btn-primary" type="submit">Guardar permisos</button>
+        </footer>
+    </form>
+</main>
+</body>
+</html>

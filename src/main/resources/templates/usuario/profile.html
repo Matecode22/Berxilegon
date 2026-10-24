@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+</head>
+<body class="profile-page">
+<main class="profile-card">
+    <header class="profile-header">
+        <div class="avatar" th:text="${#strings.substring(principal, 0, 1)}">U</div>
+        <div>
+            <h1 class="profile-name" th:text="${principal}">usuario</h1>
+            <p class="profile-meta">Sesión iniciada</p>
+        </div>
+        <form class="logout-form" th:action="@{/logout}" method="post">
+            <button class="btn-outline" type="submit">Cerrar sesión</button>
+        </form>
+    </header>
+
+    <section class="profile-body">
+        <h2 class="section-title">Authorities</h2>
+        <ul class="authority-list" th:unless="${#lists.isEmpty(authorities)}">
+            <li class="badge"
+                th:each="authority : ${authorities}"
+                th:classappend="${#strings.startsWith(authority.authority, 'ROLE_')} ? 'badge-role'"
+                th:text="${authority.authority}">PERMISSION</li>
+        </ul>
+        <p class="empty" th:if="${#lists.isEmpty(authorities)}">Este usuario no tiene authorities asignadas.</p>
+    </section>
+
+    <footer class="profile-footer">
+        <a class="btn-outline" th:href="@{/publicaciones}">Ver publicaciones</a>
+        <a class="btn-primary" th:if="${isAdmin}" th:href="@{/usuario}">Administrar usuarios</a>
+    </footer>
+</main>
+</body>
+</html>
