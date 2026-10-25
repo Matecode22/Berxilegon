@@ -88,9 +88,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/css/**").permitAll()
                                 // inicio de sesion y registro son publicos
                                 .requestMatchers("/usuario/login", "/usuario/registro").permitAll()
-                                // gestion de usuarios y roles: solo administradores
-                                .requestMatchers("/usuario/**", "/rol/**").hasRole("ADMIN")
-                                // crear categorias: solo con el permiso correspondiente
+                                // gestion de usuarios, roles y permisos: solo administradores
+                                .requestMatchers("/usuario/**", "/rol/**", "/permiso/**").hasRole("ADMIN")
                                 .requestMatchers("/categoria/**").hasAuthority("GESTIONAR_CATEGORIAS")
                                 .anyRequest().authenticated()
                 ).formLogin(login -> login

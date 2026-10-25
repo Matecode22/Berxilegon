@@ -3,50 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar usuarios</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+    <title>Usuarios</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}">
 </head>
 <body class="users-page">
 <main class="users-card">
     <header class="users-header">
         <div>
             <h1 class="users-title">Usuarios</h1>
-            <p class="users-meta" th:text="${#lists.size(usuarios)} + ' usuarios registrados'">0 usuarios registrados</p>
+            <p class="users-meta" th:text="${#lists.size(usuarios)} + ' usuarios registrados'"></p>
         </div>
         <div class="header-actions">
-            <a class="btn btn-outline" th:href="@{/rol}">Editar roles</a>
-            <a class="btn btn-primary" th:href="@{/usuario/new}">Crear usuario</a>
+            <a class="btn btn-outline" th:href="@{/rol}">Roles</a>
         </div>
     </header>
 
-    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
-
     <table class="table">
         <thead>
-        <tr>
-            <th>#</th>
-            <th>Usuario</th>
-            <th>Correo</th>
-            <th>Estado</th>
-            <th class="text-end">Acciones</th>
-        </tr>
+        <tr><th>#</th><th>Nombre</th><th>Correo</th><th>Estado</th><th class="text-end">Roles</th></tr>
         </thead>
         <tbody>
-        <tr th:each="usuario : ${usuarios}">
-            <td class="text-muted" th:text="${usuario.id}">1</td>
-            <td>
-                <a class="user-link" th:href="@{/usuario/{id}/roles(id=${usuario.id})}" th:text="${usuario.nombre}">nombre</a>
-            </td>
-            <td class="text-muted" th:text="${usuario.correo}">correo</td>
-            <td class="text-muted" th:text="${usuario.estado}">ACTIVO</td>
+        <tr th:each="u : ${usuarios}">
+            <td class="text-muted" th:text="${u.id}"></td>
+            <td th:text="${u.nombre}"></td>
+            <td class="text-muted" th:text="${u.correo}"></td>
+            <td class="text-muted" th:text="${u.estado}"></td>
             <td class="text-end">
-                <form method="post" th:action="@{/usuario/{id}/delete(id=${usuario.id})}">
-                    <button class="btn btn-danger" type="submit">Eliminar</button>
-                </form>
+                <a class="btn btn-outline" th:href="@{/usuario/{id}/roles(id=${u.id})}">Gestionar roles</a>
             </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(usuarios)}">
-            <td class="text-muted text-center" colspan="5">No hay usuarios registrados.</td>
         </tr>
         </tbody>
     </table>

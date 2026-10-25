@@ -1,6 +1,6 @@
 package edu.co.icesi.introspringboot.controller;
 
-import edu.co.icesi.introspringboot.entity.Usuario;
+import edu.co.icesi.introspringboot.entity.keys.UsuarioRolId;
 import edu.co.icesi.introspringboot.service.RolService;
 import edu.co.icesi.introspringboot.service.UsuarioRolService;
 import edu.co.icesi.introspringboot.service.UsuarioService;
@@ -22,76 +22,40 @@ public class UsuarioController {
     @Autowired
     private UsuarioRolService usuarioRolService;
 
+    // Listar usuarios
     @GetMapping
-    public String listUsuarios(
-            Model model,
-            @RequestParam(required = false) String status
-    ) {
-        if ("created".equals(status)) {
-            model.addAttribute("message", "Usuario creado correctamente");
-        }
+    public String listUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioService.findAll());
         return "usuario/index";
     }
 
-    @GetMapping("/new")
-    public String newUsuario(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "usuario/new";
-    }
-
-    @PostMapping
-    public String createUsuario(@ModelAttribute Usuario usuario) {
-        usuarioService.create(usuario);
-        return "redirect:/usuario?status=created";
-    }
-
-    @PostMapping("/{id}/delete")
-    public String deleteUsuario(@PathVariable Integer id) {
-        usuarioService.delete(id);
-        return "redirect:/usuario";
-    }
-
+    // Pantalla de roles de un usuario
     @GetMapping("/{id}/roles")
-    public String usuarioRoles(
-            Model model,
-            @PathVariable Integer id,
-            @RequestParam(required = false) String status
-    ) {
-        if ("saved".equals(status)) {
-            model.addAttribute("message", "Roles actualizados correctamente");
-        }
-        model.addAttribute("assignedRolIds", usuarioRolService.findRolIdsByUsuarioId(id));
+    public String usuarioRoles(Model model, @PathVariable Integer id,
+                               @RequestParam(required = false) String status) {
+        if ("saved".equals(status))   model.addAttribute("message", "Roles actualizados");
+        if ("removed".equals(status)) model.addAttribute("message", "Rol quitado");
         model.addAttribute("usuario", usuarioService.findById(id).orElseThrow());
         model.addAttribute("roles", rolService.findAll());
+        model.addAttribute("assignedRolIds", usuarioRolService.findRolIdsByUsuarioId(id));
         return "usuario/roles";
     }
 
-    // asocia los roles marcados y quita los desmarcados
+    // Asociar roles: guarda los roles marcados
     @PostMapping("/{id}/roles")
-    public String assignRoles(
-            @PathVariable Integer id,
-            @RequestParam(required = false) List<Integer> rolIds
-    ) {
+    public String assignRoles(@PathVariable Integer id,
+                              @RequestParam(required = false) List<Integer> rolIds) {
         usuarioRolService.assignRoles(id, rolIds == null ? List.of() : rolIds);
         return "redirect:/usuario/" + id + "/roles?status=saved";
     }
 
-    @GetMapping("/login")
-    public String login(){
-        return "usuario/login";
-    }
-
-    // Registro publico
-    @GetMapping("/registro")
-    public String registro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "usuario/registro";
-    }
-
-    @PostMapping("/registro")
-    public String registrar(@ModelAttribute Usuario usuario) {
-        usuarioService.registrar(usuario);
-        return "redirect:/usuario/login?registered";
+    // Quitar un rol a un usuario
+    @PostMapping("/{id}/roles/{rolId}/delete")
+    public String quitarRol(@PathVariable Integer id, @PathVariable Integer rolId) {
+        UsuarioRolId usuarioRolId = new UsuarioRolId();
+        usuarioRolId.setUsuarioId(id);
+        usuarioRolId.setRolId(rolId);
+        usuarioRolService.deleteById(usuarioRolId);
+        return "redirect:/usuario/" + id + "/roles?status=removed";
     }
 }

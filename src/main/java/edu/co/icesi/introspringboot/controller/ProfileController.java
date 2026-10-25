@@ -1,7 +1,6 @@
 package edu.co.icesi.introspringboot.controller;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +12,10 @@ public class ProfileController {
 
     @GetMapping("/me")
     public String myProfile(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        model.addAttribute(
-                "principal",
-                username);
-        model.addAttribute(
-                "authorities",
-                userDetails.getAuthorities());
-        boolean isAdmin = userDetails.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("principal", authentication.getName());
+        model.addAttribute("authorities", authentication.getAuthorities());
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
         return "usuario/profile";
     }
