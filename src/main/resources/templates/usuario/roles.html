@@ -4,36 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roles del usuario</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+    <link rel="stylesheet" th:href="@{/css/users.css}">
 </head>
 <body class="users-page">
-<main class="users-card narrow">
+<main class="users-card">
     <header class="users-header">
         <div>
             <h1 class="users-title" th:text="${usuario.nombre}">usuario</h1>
-            <p class="users-meta">Marca los roles que tendrá este usuario y desmarca los que quieras quitar.</p>
+            <p class="users-meta" th:text="${usuario.correo}"></p>
         </div>
     </header>
 
     <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
 
-    <form method="post" th:action="@{/usuario/{id}/roles(id=${usuario.id})}">
+    <!-- QUITAR: roles que tiene hoy -->
+    <h2>Roles actuales</h2>
+    <table class="table">
+        <tbody>
+        <tr th:each="rol : ${roles}" th:if="${#lists.contains(assignedRolIds, rol.id)}">
+            <td th:text="${rol.nombre}">ROLE_X</td>
+            <td class="text-end">
+                <form th:action="@{/usuario/{id}/roles/{rolId}/delete(id=${usuario.id}, rolId=${rol.id})}" method="post">
+                    <button class="btn btn-danger" type="submit">Quitar</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(assignedRolIds)}">
+            <td class="text-muted">Este usuario no tiene roles.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ASOCIAR: marcar los roles que debe tener -->
+    <h2>Asociar roles</h2>
+    <form th:action="@{/usuario/{id}/roles(id=${usuario.id})}" method="post">
         <ul class="check-list">
             <li th:each="rol : ${roles}">
                 <label class="check-item">
-                    <input class="check-input"
-                           type="checkbox"
-                           name="rolIds"
+                    <input class="check-input" type="checkbox" name="rolIds"
                            th:value="${rol.id}"
                            th:checked="${#lists.contains(assignedRolIds, rol.id)}">
-                    <span class="check-label" th:text="${rol.nombre}">ROLE_ADMIN</span>
+                    <span class="check-label" th:text="${rol.nombre}">ROLE_X</span>
                 </label>
             </li>
-            <li class="text-muted" th:if="${#lists.isEmpty(roles)}">No hay roles creados.</li>
         </ul>
-
         <footer class="users-footer actions">
-            <a class="btn btn-outline" th:href="@{/usuario}">Volver a usuarios</a>
+            <a class="btn btn-outline" th:href="@{/usuario}">Volver</a>
             <button class="btn btn-primary" type="submit">Guardar roles</button>
         </footer>
     </form>

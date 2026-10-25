@@ -4,24 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear rol</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
 <body class="auth-page">
 <main class="auth-card">
     <h1 class="auth-title">Crear rol</h1>
-    <p class="auth-subtitle">Se guarda con el prefijo ROLE_. Después le asignas sus permisos.</p>
-
-    <form class="auth-form" th:object="${rol}" method="post" th:action="@{/rol}">
+    <p class="auth-subtitle">Se guarda como ROLE_NOMBRE.</p>
+    <form class="auth-form" th:object="${rol}" th:action="@{/rol}" method="post">
         <label class="field">
             <span class="field-label">Nombre</span>
-            <input class="field-input" type="text" placeholder="MODERADOR" th:field="*{nombre}" required autofocus>
+            <input class="field-input" type="text" th:field="*{nombre}" placeholder="VENDEDOR" required>
         </label>
-        <button class="btn-primary" type="submit">Crear rol</button>
+        <button class="btn-primary" type="submit">Crear</button>
     </form>
-
-    <p class="auth-footer">
-        <a th:href="@{/rol}">Volver a roles</a>
-    </p>
+    <p class="auth-footer"><a th:href="@{/rol}">Volver a roles</a></p>
 </main>
 </body>
 </html>
