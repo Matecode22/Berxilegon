@@ -3,6 +3,7 @@ package edu.co.icesi.introspringboot.security;
 
 import edu.co.icesi.introspringboot.security.filter.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -43,13 +44,14 @@ public class WebSecurityConfig {
     @Bean
     @Order(1)
     public SecurityFilterChain h2SecurityFilterChain(HttpSecurity http) throws Exception {
+        // la consola H2 es otro servlet: un patron de texto ("/h2/**") no la reconoce
         http
-                .securityMatcher("/h2/**")
+                .securityMatcher(PathRequest.toH2Console())
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
+                        .ignoringRequestMatchers(PathRequest.toH2Console())
                 )
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.sameOrigin())
