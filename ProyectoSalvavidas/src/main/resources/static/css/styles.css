@@ -1,0 +1,393 @@
+:root {
+    --bg: #f5f4fb;
+    --surface: #ffffff;
+    --surface-soft: #f3f1fd;
+    --ink: #17142b;
+    --ink-soft: #6a6788;
+    --line: #e6e3f5;
+    --accent: #5b3df5;
+    --accent-2: #d946b8;
+    --accent-3: #ff9a5a;
+    --gradient: linear-gradient(120deg, var(--accent), var(--accent-2) 55%, var(--accent-3));
+    --glow-1: rgba(91, 61, 245, 0.16);
+    --glow-2: rgba(217, 70, 184, 0.13);
+    --glow-3: rgba(255, 154, 90, 0.12);
+    --shadow: 0 1px 2px rgba(23, 20, 43, 0.04), 0 10px 28px -14px rgba(23, 20, 43, 0.22);
+    --shadow-hover: 0 2px 4px rgba(23, 20, 43, 0.05), 0 28px 48px -20px rgba(91, 61, 245, 0.45);
+    --radius: 20px;
+    --font: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0f0d1c;
+        --surface: #191630;
+        --surface-soft: #231f42;
+        --ink: #f3f1ff;
+        --ink-soft: #a5a1c6;
+        --line: #2d2950;
+        --accent: #9580ff;
+        --accent-2: #f070cf;
+        --accent-3: #ffae78;
+        --glow-1: rgba(149, 128, 255, 0.2);
+        --glow-2: rgba(240, 112, 207, 0.14);
+        --glow-3: rgba(255, 174, 120, 0.1);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 32px -16px rgba(0, 0, 0, 0.7);
+        --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.3), 0 28px 52px -20px rgba(149, 128, 255, 0.55);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(60rem 34rem at 8% -10%, var(--glow-1), transparent 62%),
+        radial-gradient(48rem 30rem at 100% 0%, var(--glow-2), transparent 60%),
+        radial-gradient(52rem 34rem at 50% 115%, var(--glow-3), transparent 60%);
+    background-attachment: fixed;
+    color-scheme: light dark;
+}
+
+.page {
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1.25rem, 4vw, 2.5rem) 5rem;
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ---------- Lista de cursos ---------- */
+
+.courses-page {
+    max-width: 72rem;
+}
+
+.page-title {
+    margin: 0 0 clamp(2rem, 5vw, 3.25rem);
+    font-size: clamp(2.25rem, 6.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.page-title::before {
+    content: "Compunet II";
+    display: block;
+    width: fit-content;
+    margin-bottom: 1.1rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: course;
+}
+
+.course-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-height: 13rem;
+    padding: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    counter-increment: course;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.course-card:nth-child(1) { animation-delay: 0.06s; }
+.course-card:nth-child(2) { animation-delay: 0.12s; }
+.course-card:nth-child(3) { animation-delay: 0.18s; }
+.course-card:nth-child(4) { animation-delay: 0.24s; }
+.course-card:nth-child(5) { animation-delay: 0.30s; }
+.course-card:nth-child(6) { animation-delay: 0.36s; }
+.course-card:nth-child(n + 7) { animation-delay: 0.42s; }
+
+.course-card::before {
+    content: counter(course, decimal-leading-zero);
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 14px;
+    background: var(--surface-soft);
+    color: var(--accent);
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+
+.course-card::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.course-card:hover,
+.course-card:focus-within {
+    transform: translateY(-6px);
+    border-color: transparent;
+    box-shadow: var(--shadow-hover);
+}
+
+.course-card:hover::before,
+.course-card:focus-within::before {
+    background: var(--gradient);
+    color: #fff;
+    transform: rotate(-6deg) scale(1.05);
+}
+
+.course-card:hover::after,
+.course-card:focus-within::after {
+    transform: scaleX(1);
+}
+
+.course-card-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+
+.course-link {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+    transition: color 0.25s ease;
+}
+
+.course-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius);
+}
+
+.course-link::after {
+    content: "→";
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.35rem;
+    line-height: 2.75rem;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.course-card:hover .course-link,
+.course-link:focus-visible {
+    color: var(--accent);
+}
+
+.course-card:hover .course-link::after,
+.course-link:focus-visible::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.course-link:focus-visible::before {
+    box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.course-grid .course-professor {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line);
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.course-grid .course-professor::before {
+    content: "";
+    flex: none;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--gradient);
+    box-shadow: 0 0 0 4px var(--surface-soft);
+}
+
+/* ---------- Detalle del curso ---------- */
+
+.detail-page {
+    position: relative;
+    max-width: 44rem;
+    margin-top: clamp(1.25rem, 8vh, 6rem);
+    margin-bottom: 3rem;
+    padding: clamp(2rem, 6vw, 3.5rem);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background:
+        var(--gradient) top / 100% 6px no-repeat,
+        radial-gradient(22rem 22rem at 100% 0%, var(--glow-2), transparent 70%),
+        var(--surface);
+    box-shadow: var(--shadow), 0 40px 80px -40px var(--glow-1);
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (max-width: 46rem) {
+    .detail-page {
+        margin-inline: 1rem;
+    }
+}
+
+.course-name {
+    position: relative;
+    margin: 0 0 2rem;
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.course-name::before {
+    content: "Curso";
+    display: block;
+    width: fit-content;
+    margin-bottom: 1.1rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.course-name-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.detail-page .course-professor {
+    position: relative;
+    margin: 0;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--line);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.detail-page .course-professor::before {
+    content: "Profesor";
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.course-credits {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0.5rem 0 0;
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--surface-soft);
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.credits-value {
+    display: inline-grid;
+    place-items: center;
+    min-width: 3.25rem;
+    height: 3.25rem;
+    padding: 0 0.75rem;
+    border-radius: 16px;
+    background: var(--gradient);
+    box-shadow: 0 12px 24px -12px var(--accent);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

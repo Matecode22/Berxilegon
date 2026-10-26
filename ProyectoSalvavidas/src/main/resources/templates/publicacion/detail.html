@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalle de la publicación</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body class="page detail-page">
+    <h1 class="course-name"><span class="course-name-text" th:text="${publicacion.titulo}"></span></h1>
+    <p class="course-professor" th:text="'Publicado por ' + ${publicacion.usuario.nombre} + ' en ' + ${publicacion.categoria.nombre}"></p>
+    <p class="course-credits" th:text="${publicacion.descripcion}"></p>
+    <p class="course-credits">Modo: <span class="credits-value" th:text="${publicacion.modoOferta}"></span>
+        · Estado: <span class="credits-value" th:text="${publicacion.estado}"></span>
+        · Conservación: <span class="credits-value" th:text="${publicacion.estadoConservacion}"></span></p>
+
+    <p class="course-credits" th:if="${publicacion.detalleVenta != null}">
+        Precio: <span class="credits-value" th:text="${publicacion.detalleVenta.precio}"></span>
+        <span th:if="${publicacion.detalleVenta.elegibleIntercambio}"> · Acepta intercambio</span>
+    </p>
+    <p class="course-credits" th:if="${publicacion.detalleSubasta != null}">
+        Precio base: <span class="credits-value" th:text="${publicacion.detalleSubasta.precioBase}"></span>
+        · Incremento mínimo: <span class="credits-value" th:text="${publicacion.detalleSubasta.incrementoMinimo}"></span>
+        · Cierra: <span class="credits-value" th:text="${publicacion.detalleSubasta.fechaCierre}"></span>
+    </p>
+
+    <ul class="course-grid" th:unless="${#lists.isEmpty(fotos)}">
+        <li class="course-card" th:each="foto : ${fotos}">
+            <a class="course-link" th:href="${foto.url}" th:text="'Foto ' + ${foto.orden}"></a>
+        </li>
+    </ul>
+
+    <p><a class="course-link" th:href="@{/publicaciones}">Volver a publicaciones</a></p>
+</body>
+</html>

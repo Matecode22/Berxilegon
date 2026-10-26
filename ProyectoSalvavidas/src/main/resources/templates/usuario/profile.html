@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body class="profile-page">
+<main class="profile-card">
+    <header class="profile-header">
+        <div class="avatar" th:text="${#strings.substring(principal, 0, 1)}">U</div>
+        <div>
+            <h1 class="profile-name" th:text="${principal}">correo</h1>
+            <p class="profile-meta">Sesión iniciada</p>
+        </div>
+        <!-- cerrar sesion tambien es POST con th:action (lleva CSRF) -->
+        <form class="logout-form" th:action="@{/logout}" method="post">
+            <button class="btn-outline" type="submit">Cerrar sesión</button>
+        </form>
+    </header>
+
+    <section class="profile-body">
+        <h2 class="section-title">Roles y permisos</h2>
+        <ul class="authority-list">
+            <li class="badge" th:each="a : ${authorities}"
+                th:classappend="${#strings.startsWith(a.authority, 'ROLE_')} ? 'badge-role'"
+                th:text="${a.authority}">PERMISO</li>
+        </ul>
+    </section>
+
+    <footer class="profile-footer" th:if="${isAdmin}">
+        <a class="btn-primary" th:href="@{/usuario}">Usuarios</a>
+        <a class="btn-outline" th:href="@{/rol}">Roles</a>
+        <a class="btn-outline" th:href="@{/permiso}">Permisos</a>
+    </footer>
+</main>
+</body>
+</html>

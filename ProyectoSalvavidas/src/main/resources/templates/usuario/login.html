@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <h1 class="auth-title">Bienvenido</h1>
+    <p class="auth-subtitle">Ingresa con tu correo y contraseña.</p>
+
+    <div class="alert alert-error" th:if="${param.error}">Correo o contraseña incorrectos</div>
+    <div class="alert alert-success" th:if="${param.logout}">Has cerrado sesión</div>
+    <div class="alert alert-success" th:if="${param.registered}">Cuenta creada, ya puedes ingresar</div>
+
+    <!-- name="username" y name="password": son los nombres que espera Spring Security -->
+    <form class="auth-form" th:action="@{/usuario/login}" method="post">
+        <label class="field">
+            <span class="field-label">Correo</span>
+            <input class="field-input" type="email" name="username" required autofocus>
+        </label>
+        <label class="field">
+            <span class="field-label">Contraseña</span>
+            <input class="field-input" type="password" name="password" required>
+        </label>
+        <button class="btn-primary" type="submit">Ingresar</button>
+    </form>
+
+    <p class="auth-footer">¿No tienes cuenta? <a th:href="@{/usuario/registro}">Regístrate</a></p>
+</main>
+</body>
+</html>

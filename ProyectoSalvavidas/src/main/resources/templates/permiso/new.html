@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear permiso</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <h1 class="auth-title">Crear permiso</h1>
+    <form class="auth-form" th:object="${permiso}" th:action="@{/permiso}" method="post">
+        <label class="field">
+            <span class="field-label">Nombre</span>
+            <input class="field-input" type="text" th:field="*{nombre}" placeholder="VER_REPORTES" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Descripción</span>
+            <input class="field-input" type="text" th:field="*{descripcion}">
+        </label>
+        <button class="btn-primary" type="submit">Crear</button>
+    </form>
+    <p class="auth-footer"><a th:href="@{/permiso}">Volver</a></p>
+</main>
+</body>
+</html>

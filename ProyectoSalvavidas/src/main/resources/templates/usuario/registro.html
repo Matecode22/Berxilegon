@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <h1 class="auth-title">Crear cuenta</h1>
+
+    <div class="alert alert-error" th:if="${param.error}">Ese correo ya está registrado o faltan datos</div>
+
+    <!-- th:object + th:field llenan el objeto Usuario que recibe el @ModelAttribute -->
+    <form class="auth-form" th:object="${usuario}" th:action="@{/usuario/registro}" method="post">
+        <label class="field">
+            <span class="field-label">Nombre</span>
+            <input class="field-input" type="text" th:field="*{nombre}" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Correo</span>
+            <input class="field-input" type="email" th:field="*{correo}" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Contraseña</span>
+            <input class="field-input" type="password" th:field="*{contrasena}" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Ciudad</span>
+            <input class="field-input" type="text" th:field="*{ciudad}">
+        </label>
+        <label class="field">
+            <span class="field-label">Contacto</span>
+            <input class="field-input" type="text" th:field="*{contacto}">
+        </label>
+        <button class="btn-primary" type="submit">Registrarme</button>
+    </form>
+
+    <p class="auth-footer"><a th:href="@{/usuario/login}">Ya tengo cuenta</a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}">
+</head>
+<body class="users-page">
+<main class="users-card">
+    <header class="users-header">
+        <div>
+            <h1 class="users-title">Usuarios</h1>
+            <p class="users-meta" th:text="${#lists.size(usuarios)} + ' usuarios registrados'"></p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-outline" th:href="@{/rol}">Roles</a>
+        </div>
+    </header>
+
+    <table class="table">
+        <thead>
+        <tr><th>#</th><th>Nombre</th><th>Correo</th><th>Estado</th><th class="text-end">Roles</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${usuarios}">
+            <td class="text-muted" th:text="${u.id}"></td>
+            <td th:text="${u.nombre}"></td>
+            <td class="text-muted" th:text="${u.correo}"></td>
+            <td class="text-muted" th:text="${u.estado}"></td>
+            <td class="text-end">
+                <a class="btn btn-outline" th:href="@{/usuario/{id}/roles(id=${u.id})}">Gestionar roles</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <footer class="users-footer">
+        <a class="btn btn-outline" th:href="@{/profile/me}">Volver al perfil</a>
+    </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crear categoría</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <h1 class="auth-title">Crear categoría</h1>
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+
+    <form class="auth-form" th:object="${categoria}"
+          method="post"
+          th:action="@{/categoria/save}">
+        <label class="field">
+            <span class="field-label">Nombre</span>
+            <input class="field-input" type="text" placeholder="Tecnología" th:field="*{nombre}" required>
+        </label>
+        <label class="field">
+            <span class="field-label">Descripción</span>
+            <input class="field-input" type="text" placeholder="Computadores, celulares..." th:field="*{descripcion}">
+        </label>
+        <button class="btn-primary" type="submit">Crear</button>
+    </form>
+</main>
+</body>
+</html>

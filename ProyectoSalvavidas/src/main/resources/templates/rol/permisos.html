@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permisos del rol</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}">
+</head>
+<body class="users-page">
+<main class="users-card">
+    <header class="users-header">
+        <div>
+            <h1 class="users-title" th:text="${rol.nombre}">ROLE_X</h1>
+            <p class="users-meta">Marca los permisos del rol; desmarca para quitarlos.</p>
+        </div>
+    </header>
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+    <form th:action="@{/rol/{id}/permisos(id=${rol.id})}" method="post">
+        <ul class="check-list check-grid">
+            <li th:each="p : ${permisos}">
+                <label class="check-item">
+                    <input class="check-input" type="checkbox" name="permisoIds"
+                           th:value="${p.id}"
+                           th:checked="${#lists.contains(assignedPermisoIds, p.id)}">
+                    <span class="check-label" th:text="${p.nombre}">PERMISO</span>
+                </label>
+            </li>
+        </ul>
+        <footer class="users-footer actions">
+            <a class="btn btn-outline" th:href="@{/rol}">Volver</a>
+            <button class="btn btn-primary" type="submit">Guardar permisos</button>
+        </footer>
+    </form>
+</main>
+</body>
+</html>

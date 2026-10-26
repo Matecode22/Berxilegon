@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permisos</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}">
+</head>
+<body class="users-page">
+<main class="users-card">
+    <header class="users-header">
+        <div><h1 class="users-title">Permisos</h1></div>
+        <div class="header-actions">
+            <a class="btn btn-primary" th:href="@{/permiso/new}">Crear permiso</a>
+        </div>
+    </header>
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+    <table class="table">
+        <thead><tr><th>Nombre</th><th>Descripción</th></tr></thead>
+        <tbody>
+        <tr th:each="p : ${permisos}">
+            <td th:text="${p.nombre}"></td>
+            <td class="text-muted" th:text="${p.descripcion}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <footer class="users-footer">
+        <a class="btn btn-outline" th:href="@{/rol}">Volver a roles</a>
+    </footer>
+</main>
+</body>
+</html>
